@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './App.css'
-import { Counter } from './components/counter/Counter';
-import { Button } from './components/button/Button';
+import { CounterBlock } from './components/counterBlock/CounterBlock';
+import { SettingsBlock } from './components/settingsBlock/SettingsBlock';
 
 const maxCount = 5;
 
 function App() {
   const [count, setCount] = useState(0);
+  const [isOpenSettings, setIsOpenSettings] = useState(false);
   
   const incCount = () => {
     setCount(count + 1)
@@ -16,13 +17,19 @@ function App() {
     setCount(0)
   }
 
+  const handleSettingsClick = () => {
+    setIsOpenSettings(prev => !prev)
+  }
+
   return (
     <div className="wrap_counter">
-      <Counter count={count} maxCount={maxCount}/>
-      <div className="wrap_button">
-        <Button title="inc" disabled={count === maxCount} callBack={incCount}/>
-        <Button title="reset" disabled={count === 0} callBack={resetCount}/>
-      </div>
+      {!isOpenSettings ?
+      (
+        <CounterBlock count={count} maxCount={maxCount} incCount={incCount} resetCount={resetCount} handleSettingsClick={handleSettingsClick}/>
+      ) : (
+        <SettingsBlock handleSettingsClick={handleSettingsClick} count={count} maxCount={maxCount} />
+      )
+    }
     </div>
   );
 }
