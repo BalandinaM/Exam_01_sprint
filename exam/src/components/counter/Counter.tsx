@@ -1,7 +1,7 @@
 import style from "./counter.module.css";
 
 type CounterProps = {
-  count: number;
+  count:number;
   maxCount: number;
 };
 
