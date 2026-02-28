@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { CounterBlock } from './components/counterBlock/CounterBlock';
 import { SettingsBlock } from './components/settingsBlock/SettingsBlock';
@@ -6,8 +6,18 @@ import { SettingsBlock } from './components/settingsBlock/SettingsBlock';
 const maxCount = 5;
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(() => {
+    const countAsString = localStorage.getItem("counterValue");
+    if (countAsString) {
+      return JSON.parse(countAsString);
+    }
+    return 0;
+  });
   const [isOpenSettings, setIsOpenSettings] = useState(false);
+
+  useEffect(()=>{
+    localStorage.setItem("counterValue", JSON.stringify(count))
+  }, [count])
   
   const incCount = () => {
     setCount(count + 1)
