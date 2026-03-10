@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../button/Button";
-import { Settings } from "../settings/Settings";
+import { Input } from "../input/Input";
 
 export type SettingsBlockProps = {
   minCount: number;
@@ -16,22 +16,37 @@ export const SettingsBlock = ({
   const [newMaxCount, setNewMaxCount] = useState(maxCount);
   const [newMinCount, setNewMinCount] = useState(minCount);
 
-  // const onClickSaveSettings = (minCountValue: number, maxCountValue: number) => {
+  const errorMinValue = newMinCount >= newMaxCount || newMinCount < 0;
+  const errorMaxValue = newMaxCount <= newMinCount || newMaxCount < 0;
 
-  // }
+  const changeMinCountHandler = (value: number) => {
+    setNewMinCount(value);
+  };
+
+   const changeMaxCountHandler = (value: number) => {
+    setNewMaxCount(value);
+  };
+
 
   return (
     <div>
-      <Settings
-        minCount={newMinCount}
-        maxCount={newMaxCount}
-        setNewMaxCount={setNewMaxCount}
-        setNewMinCount={setNewMinCount}
-      />
+      <div>
+        <Input
+          value={newMinCount}
+          setNewValue={changeMinCountHandler}
+          error={errorMinValue}
+        />
+        <Input
+          value={newMaxCount}
+          setNewValue={changeMaxCountHandler}
+          error={errorMaxValue}
+        />
+      </div>
       <div className="wrap_button">
         <Button
           title="set"
           callBack={() => handleSaveSettings(newMinCount, newMaxCount)}
+          disabled={errorMinValue || errorMaxValue}
         />
       </div>
     </div>
