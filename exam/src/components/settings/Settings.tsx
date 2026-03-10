@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Input } from "../input/Input";
 
 export type SettingsProps = {
     minCount: number;
@@ -8,39 +9,32 @@ export type SettingsProps = {
 }
 
 export const Settings = ({minCount, maxCount, setNewMaxCount, setNewMinCount}: SettingsProps) => {
-  const [error, setError] = useState(false);
+  const [errorMinValue, setErrorMinValue] = useState(false);
+  const [errorMaxValue, setErrorMaxValue] = useState(false);
 
-  const changeMinCountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(false);
-    const currentValueInput = Number(e.currentTarget.value)
-    if (currentValueInput >= maxCount || currentValueInput < 0) {
+  const changeMinCountHandler = (value: number) => {
+    setErrorMinValue(false);
+    if (value >= maxCount || value < 0) {
       console.log('error!!!  min value');
-      setError(true)
+      setErrorMinValue(true)
     }
-    setNewMinCount(Number(e.currentTarget.value));
+    setNewMinCount(value);
   };
 
-
-  const changeMaxCountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(false);
-    const currentValueInput = Number(e.currentTarget.value)
-    if (currentValueInput <= minCount || currentValueInput < 0) {
+   const changeMaxCountHandler = (value: number) => {
+    setErrorMaxValue(false);
+    if (value <= minCount || value < 0) {
       console.log('error!!!  max value');
-      setError(true)
+      setErrorMaxValue(true)
     }
-    setNewMaxCount(Number(e.currentTarget.value));
+    setNewMaxCount(value);
   };
-
 
 
   return (
     <div>
-      <input style={{ background: error ? 'red' : 'black' }}  type="number" value={minCount} onChange={changeMinCountHandler}/>
-      <input style={{ background: error ? 'red' : 'black' }} type="number" value={maxCount} onChange={changeMaxCountHandler}/>
+      <Input value={minCount} setNewValue={changeMinCountHandler} error={errorMinValue}/>
+      <Input value={maxCount} setNewValue={changeMaxCountHandler} error={errorMaxValue}/>
     </div>
   );
 };
-
-
-// Вынести инпут в отдельный компонент, он должен быть универсальным
-// ошибки должны быть сои у каждого инпута
