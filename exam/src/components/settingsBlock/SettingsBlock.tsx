@@ -16,9 +16,9 @@ export const SettingsBlock = ({
   const [newMaxCount, setNewMaxCount] = useState(maxCount);
   const [newMinCount, setNewMinCount] = useState(minCount);
 
-  const onClickSaveSettings = (minCountValue: number, maxCountValue: number) => {
+  // const onClickSaveSettings = (minCountValue: number, maxCountValue: number) => {
 
-  }
+  // }
 
   return (
     <div>
