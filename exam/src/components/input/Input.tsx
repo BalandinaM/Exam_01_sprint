@@ -15,6 +15,7 @@ export const Input = ({ value, setNewValue, error }: InputProps) => {
       type="number"
       value={value}
       onChange={changeValueHandler}
+      className="input"
     />
   );
 };

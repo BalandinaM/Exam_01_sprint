@@ -30,7 +30,7 @@ export const SettingsBlock = ({
 
   return (
     <div>
-      <div>
+      <div className="wrap_input">
         <Input
           value={newMinCount}
           setNewValue={changeMinCountHandler}
